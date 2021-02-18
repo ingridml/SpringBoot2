@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="no">
+<script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Ukesoppgaver uke 7</title>
+</head>
+<body>
+<h1>Ukesoppgaver uke 7</h1>
+
+Lag et register for motorvogner. Det skal være mulig å lagre motorvogner (biler) i et array på server.
+Videre skal det være mulig å slette alle bilene i registeret med en knapp.
+
+<div>
+    <h2>Motorvognregister</h2>
+    <label for="personnummer">Eiers personnummer: </label>
+    <br>
+    <input type="text" id="personnummer"/>
+    <br>
+    <label for="navn">Eiers navn: </label>
+    <br>
+    <input type="text" id="navn"/>
+    <br>
+    <label for="adresse">Eiers adresse: </label>
+    <br>
+    <input type="text" id="adresse"/>
+    <br>
+    <label for="kjennetegn">Eiers navn: </label>
+    <br>
+    <input type="text" id="kjennetegn"/>
+    <br>
+    <label for="bilmerke">Eiers navn: </label>
+    <br>
+    <input type="text" id="bilmerke"/>
+    <br>
+    <label for="biltype">Eiers navn: </label>
+    <br>
+    <input type="text" id="biltype"/>
+    <br>
+    <br>
+    <button id="visRegister">Register</button>
+    <br>
+    <p>Alle bilene: </p>
+    <div id="bilRegister"></div>
+    <br>
+    <button id="slettRegister">Slett alle</button>
+</div>
+
+<script type="application/javascript">
+
+    $(function () {
+        $("#visRegister").click(function () {
+
+            const url = "/hentData/?innPersonnummer=" + $("#personnummer").val()
+                + "&innNavn=" + $("#navn").val() + "&innAdresse=" + $("#adresse").val()
+                + "&innKjennetegn=" + $("#kjennetegn").val() + "&innBilmerke=" + $("#bilmerke").val()
+                + "&innBilmerke=" + $("#biltype").val();
+
+            $.get("/lagre", function(){
+                $("input").val("");
+                hentData();
+            });
+
+            function hentData(){
+                $.get(url, function (data){
+                    $("#bilRegister").html(data)
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
